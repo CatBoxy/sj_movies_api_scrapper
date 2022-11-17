@@ -14,8 +14,10 @@ router = APIRouter(
 options = webdriver.ChromeOptions()
 options.add_argument('--start-maximized')
 options.add_argument('--disable-extensions')
-driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
+options.add_argument("--headless")
+driver_path = '/home/juan/dev/chromedriver'
 driver = webdriver.Chrome(driver_path, options=options)
+
 
 @router.get("/cpm")
 async def scrapeCPM():
@@ -25,6 +27,8 @@ async def scrapeCPM():
     controller = ScrapperController(movieRepo, cmpScrapper)
     movies = controller.scrapeAllMovies()
     controller.saveMovies(movies)
+    return "movies saved successfully"
+
 
 @router.get("/play")
 async def scrapePlay():

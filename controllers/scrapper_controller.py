@@ -14,18 +14,34 @@ class ScrapperController():
     __bot: Scrapper
 
     def saveMovie(self, movie: Movie):
-        movieData = {
-            "movie_id": str(uuid.uuid4()),
+        movieId = str(uuid.uuid4())
+        movieValues = {
+            "movie_id": movieId,
             "name": movie.name,
             "cinema": movie.cinema,
             "image_url": movie.imageUrl
         }
-        roomData =
-        self.__repo.saveMovie(movie, rooms, times)
+        roomValues = []
+        timeValues = []
+        for room in movie.movieRoom:
+            roomId = str(uuid.uuid4())
+            roomData = {
+                "room_id": roomId,
+                "name": room.name,
+                "movie_id": movieId
+            }
+            roomValues.append(roomData)
+            for time in room.movieTimes:
+                timeData = {
+                    "time_id": str(uuid.uuid4()),
+                    "time": time,
+                    "room_id": roomId
+                }
+                timeValues.append(timeData)
+        self.__repo.saveMovie(movieValues, roomValues, timeValues)
 
     def saveMovies(self, movies: List[Movie]):
         for movie in movies:
-
             self.saveMovie(movie)
 
     def scrapeMovie(self):

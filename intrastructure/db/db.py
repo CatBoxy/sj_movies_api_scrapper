@@ -1,4 +1,3 @@
-
 import mysql.connector
 from mysql.connector import Error
 
@@ -48,12 +47,20 @@ class DB():
     def insert(self, tabla, fields: dict):
         try:
             placeholders = ()
-            values = []
+            values = tuple(dict.values(fields))
+            fieldNames = tuple(dict.keys(fields))
+
+            for name in fields:
+                placeholders = (*placeholders, "%s")
+
+            namesString = ', '.join(fieldNames)
+            placeholdersString = ', '.join(placeholders)
+
             query = "INSERT INTO {tabla} ({namesString}) VALUES ({placeholdersString})".format(tabla=tabla,
                                                                                                namesString=namesString,
                                                                                                placeholdersString=placeholdersString)
             cursor = self.connection.cursor()
             cursor.execute(query, values)
+            self.connection.commit()
         except Error as ex:
             print('Error al crear: {0}'.format(ex))
-

@@ -17,13 +17,13 @@ class PlayCinemaWebScrapper(Scrapper):
     options: Any
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://sanjuancultural.com/cartelera-play-cinema-san-juan/'
-    driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
+    driver_path = '/home/juan/dev/chromedriver'
     hourRegex = "([0-1][0-9]|2[0-3]):[0-5][0-9]"
     roomNameRegex = "(2D Cast|2D Sub|3D Cast|3D Sub)"
 
     def scrape(self):
         self.driver.get(self.url)
-        content = driver.page_source
+        content = self.driver.page_source
         soup = BeautifulSoup(content, 'html.parser')
         patternTime = re.compile(self.hourRegex)
         patternRoomName = re.compile(self.roomNameRegex)
@@ -75,13 +75,13 @@ class PlayCinemaWebScrapper(Scrapper):
         return len(self.movies)
 
 
-options = webdriver.ChromeOptions()
-options.add_argument('--start-maximized')
-options.add_argument('--disable-extensions')
-
-driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
-
-driver = webdriver.Chrome(driver_path, options=options)
-
-playCinemaScrapper = PlayCinemaWebScrapper(driver=driver, options=options)
-playCinemaScrapper.scrape()
+# options = webdriver.ChromeOptions()
+# options.add_argument('--start-maximized')
+# options.add_argument('--disable-extensions')
+#
+# driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
+#
+# driver = webdriver.Chrome(driver_path, options=options)
+#
+# playCinemaScrapper = PlayCinemaWebScrapper(driver=driver, options=options)
+# playCinemaScrapper.scrape()

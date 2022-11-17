@@ -17,7 +17,7 @@ class CpmWebScrapper(Scrapper):
     options: Any
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://cpmcines.com/complejo/sanjuan'
-    driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
+    driver_path = '/home/juan/dev/chromedriver'
 
     def scrape(self):
         self.driver.get(self.url)
