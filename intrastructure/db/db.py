@@ -10,7 +10,7 @@ class DB():
                 port="3306",
                 host="127.0.0.1",
                 user="root",
-                password="2154625",
+                password="password",
                 db=db
             )
             self.cursor = self.connection.cursor()
@@ -49,7 +49,9 @@ class DB():
         try:
             placeholders = ()
             values = []
-            query = "INSERT INTO {tabla} ({namesString}) VALUES ({placeholdersString})".format()
+            query = "INSERT INTO {tabla} ({namesString}) VALUES ({placeholdersString})".format(tabla=tabla,
+                                                                                               namesString=namesString,
+                                                                                               placeholdersString=placeholdersString)
             cursor = self.connection.cursor()
             cursor.execute(query, values)
         except Error as ex:

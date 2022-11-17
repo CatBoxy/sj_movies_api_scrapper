@@ -1,3 +1,4 @@
+import uuid
 from dataclasses import dataclass
 from typing import List
 
@@ -13,10 +14,18 @@ class ScrapperController():
     __bot: Scrapper
 
     def saveMovie(self, movie: Movie):
-        pass
+        movieData = {
+            "movie_id": str(uuid.uuid4()),
+            "name": movie.name,
+            "cinema": movie.cinema,
+            "image_url": movie.imageUrl
+        }
+        roomData =
+        self.__repo.saveMovie(movie, rooms, times)
 
     def saveMovies(self, movies: List[Movie]):
         for movie in movies:
+
             self.saveMovie(movie)
 
     def scrapeMovie(self):

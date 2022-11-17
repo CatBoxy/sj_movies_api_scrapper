@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 
 from intrastructure.db.db import DB
+from intrastructure.value_objects.movie import Movie
 
 
 @dataclass
 class MovieRepo():
     __db: DB
 
-    def saveMovie(self):
-        pass
+    def saveMovie(self, movie: Movie):
 
     def saveMovies(self):
         pass
