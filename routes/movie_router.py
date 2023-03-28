@@ -1,5 +1,9 @@
 from fastapi import APIRouter
 
+from controllers.movie_controller import MovieController
+from infrastructure.db.db import DB
+from repositories.movie_repo import MovieRepo
+
 router = APIRouter(
     prefix="/movies",
     tags=["movies"],
@@ -9,12 +13,20 @@ router = APIRouter(
 
 @router.get("/")
 async def readMovies():
-    return [{"username": "Rick"}, {"username": "Morty"}]
+    database = DB('sj-movies')
+    movieRepo = MovieRepo(database)
+    controller = MovieController(movieRepo)
+    movies = controller.getAllMovies()
+    return {"movies": movies}
 
 
 @router.get("/{movie_id}")
-async def readMovieId():
-    return {"username": "fakecurrentuser"}
+async def readMovieId(movie_id: str):
+    database = DB('sj-movies')
+    movieRepo = MovieRepo(database)
+    controller = MovieController(movieRepo)
+    movie = controller.getMovie(movie_id)
+    return {"movie": movie}
 
 
 

@@ -6,9 +6,9 @@ import unicodedata
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-from intrastructure.bots.scrapper import Scrapper
-from intrastructure.value_objects.movie import Movie
-from intrastructure.value_objects.room import Room
+from infrastructure.bots.scrapper import Scrapper
+from infrastructure.value_objects.movie import Movie
+from infrastructure.value_objects.room import Room
 
 
 @dataclass
@@ -17,7 +17,7 @@ class PlayCinemaWebScrapper(Scrapper):
     options: Any
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://sanjuancultural.com/cartelera-play-cinema-san-juan/'
-    driver_path = '/home/juan/dev/chromedriver'
+    driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
     hourRegex = "([0-1][0-9]|2[0-3]):[0-5][0-9]"
     roomNameRegex = "(2D Cast|2D Sub|3D Cast|3D Sub)"
 

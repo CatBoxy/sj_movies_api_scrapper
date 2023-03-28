@@ -1,3 +1,5 @@
+from typing import Optional
+
 import mysql.connector
 from mysql.connector import Error
 
@@ -9,7 +11,7 @@ class DB():
                 port="3306",
                 host="127.0.0.1",
                 user="root",
-                password="password",
+                password="2154625",
                 db=db
             )
             self.cursor = self.connection.cursor()
@@ -63,4 +65,23 @@ class DB():
             cursor.execute(query, values)
             self.connection.commit()
         except Error as ex:
-            print('Error al crear: {0}'.format(ex))
+            print('Error al insertar: {0}'.format(ex))
+
+    def select(self, query, values: Optional[tuple] = None):
+        try:
+            cursor = self.connection.cursor()
+            if values is None:
+                cursor.execute(query)
+            else:
+                cursor.execute(query, values)
+            columnNames = cursor.column_names
+            allRows = cursor.fetchall()
+            rowsFound = []
+
+            for row in allRows:
+                if len(columnNames) == len(row):
+                    rowsFound.append({columnNames[i]: row[i] for i, _ in enumerate(row)})
+
+            return rowsFound
+        except Error as ex:
+            print('Error al buscar: {0}'.format(ex))

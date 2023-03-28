@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from intrastructure.value_objects.room import Room
+from infrastructure.value_objects.room import Room
 
 
 @dataclass(frozen=True)

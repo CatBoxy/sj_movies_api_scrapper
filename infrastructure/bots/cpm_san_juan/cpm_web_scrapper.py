@@ -6,9 +6,10 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
-from intrastructure.bots.cpm_san_juan.movie_scrapper import CpmMovieScrapper
-from intrastructure.bots.scrapper import Scrapper
-from intrastructure.value_objects.movie import Movie
+from infrastructure.bots.cpm_san_juan.movie_scrapper import CpmMovieScrapper
+from infrastructure.bots.scrapper import Scrapper
+from infrastructure.value_objects.movie import Movie
+from selenium.webdriver.chrome.service import Service
 
 
 @dataclass
@@ -17,7 +18,7 @@ class CpmWebScrapper(Scrapper):
     options: Any
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://cpmcines.com/complejo/sanjuan'
-    driver_path = '/home/juan/dev/chromedriver'
+    driver_path = r'C:/Users/Chalamardo/dev/python/chromedriver.exe'
 
     def scrape(self):
         self.driver.get(self.url)
@@ -32,7 +33,8 @@ class CpmWebScrapper(Scrapper):
             self.driver.execute_script("window.history.go(-1)")
 
         for url in urls:
-            newDriver = webdriver.Chrome(self.driver_path, options=self.options)
+            service = Service(r'C:/Users/Chalamardo/dev/python/chromedriver.exe')
+            newDriver = webdriver.Chrome(service=service, options=self.options)
             newDriver.get(url)
             cpmMovie = CpmMovieScrapper(driver=newDriver)
             self.movies.append(cpmMovie)

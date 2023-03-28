@@ -5,8 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from intrastructure.value_objects.movie import Movie
-from intrastructure.value_objects.room import Room
+from infrastructure.value_objects.movie import Movie
+from infrastructure.value_objects.room import Room
 
 
 def CpmMovieScrapper(driver) -> Movie:
