@@ -17,7 +17,6 @@ class PlayCinemaWebScrapper(Scrapper):
     options: Any
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://sanjuancultural.com/cartelera-play-cinema-san-juan/'
-    driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
     hourRegex = "([0-1][0-9]|2[0-3]):[0-5][0-9]"
     roomNameRegex = "(2D Cast|2D Sub|3D Cast|3D Sub)"
 
@@ -75,13 +74,4 @@ class PlayCinemaWebScrapper(Scrapper):
         return len(self.movies)
 
 
-# options = webdriver.ChromeOptions()
-# options.add_argument('--start-maximized')
-# options.add_argument('--disable-extensions')
-#
-# driver_path = 'C:/Users/Chalamardo/dev/python/chromedriver.exe'
-#
-# driver = webdriver.Chrome(driver_path, options=options)
-#
-# playCinemaScrapper = PlayCinemaWebScrapper(driver=driver, options=options)
-# playCinemaScrapper.scrape()
+

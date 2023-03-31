@@ -1,6 +1,10 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import APIRouter
 from selenium import webdriver
 
+from config import Settings
 from controllers.scrapper_controller import ScrapperController
 from infrastructure.bots.cpm_san_juan.cpm_web_scrapper import CpmWebScrapper
 from infrastructure.db.db import DB
@@ -20,7 +24,11 @@ options.add_argument('--start-maximized')
 options.add_argument('--disable-extensions')
 options.add_argument("--headless")
 
-service = Service(r'C:/Users/Chalamardo/dev/python/chromedriver.exe')
+setting = Settings()
+load_dotenv(setting.Config.env_file)
+CHROME_DRIVER_PATH = os.environ.get("CHROME_DRIVER_PATH")
+
+service = Service(CHROME_DRIVER_PATH)
 driver = webdriver.Chrome(service=service, options=options)
 
 
@@ -28,7 +36,7 @@ driver = webdriver.Chrome(service=service, options=options)
 async def scrapeCPM():
     database = DB('sj-movies')
     movieRepo = MovieRepo(database)
-    cmpScrapper = CpmWebScrapper(driver, options)
+    cmpScrapper = CpmWebScrapper(driver, options, CHROME_DRIVER_PATH)
     controller = ScrapperController(movieRepo, cmpScrapper)
     movies = controller.scrapeAllMovies()
     controller.saveMovies(movies)

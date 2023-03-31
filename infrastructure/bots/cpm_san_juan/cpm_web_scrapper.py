@@ -16,9 +16,9 @@ from selenium.webdriver.chrome.service import Service
 class CpmWebScrapper(Scrapper):
     driver: Any
     options: Any
+    driverPath: str
     movies: List[Movie] = field(default_factory=lambda: [])
     url: str = 'https://cpmcines.com/complejo/sanjuan'
-    driver_path = r'C:/Users/Chalamardo/dev/python/chromedriver.exe'
 
     def scrape(self):
         self.driver.get(self.url)
@@ -33,7 +33,7 @@ class CpmWebScrapper(Scrapper):
             self.driver.execute_script("window.history.go(-1)")
 
         for url in urls:
-            service = Service(r'C:/Users/Chalamardo/dev/python/chromedriver.exe')
+            service = Service(self.driverPath)
             newDriver = webdriver.Chrome(service=service, options=self.options)
             newDriver.get(url)
             cpmMovie = CpmMovieScrapper(driver=newDriver)
