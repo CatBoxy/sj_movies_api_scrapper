@@ -19,6 +19,7 @@ class ScrapperController():
     __bot: Scrapper
 
     def saveMovie(self, movie: Movie):
+        # TODO add addedDate a movieValues
         movieId = str(uuid.uuid4())
         scrapeDate = DateTime(datetime.now(tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S"))
         movieValues = {

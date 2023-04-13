@@ -27,6 +27,8 @@ options.add_argument("--headless")
 setting = Settings()
 load_dotenv(setting.Config.env_file)
 CHROME_DRIVER_PATH = os.environ.get("CHROME_DRIVER_PATH")
+DB_PATH = os.environ.get("DB_PATH")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
 service = Service(CHROME_DRIVER_PATH)
 driver = webdriver.Chrome(service=service, options=options)
@@ -34,7 +36,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 @router.get("/cpm")
 async def scrapeCPM():
-    database = DB('sj-movies')
+    database = DB(DB_PATH, DB_PASSWORD)
     movieRepo = MovieRepo(database)
     cmpScrapper = CpmWebScrapper(driver, options, CHROME_DRIVER_PATH)
     controller = ScrapperController(movieRepo, cmpScrapper)

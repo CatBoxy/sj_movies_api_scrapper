@@ -5,13 +5,13 @@ from mysql.connector import Error
 
 
 class DB():
-    def __init__(self, db):
+    def __init__(self, db, password):
         try:
             self.connection = mysql.connector.connect(
                 port="3306",
                 host="127.0.0.1",
                 user="root",
-                password="2154625",
+                password=password,
                 db=db
             )
             self.cursor = self.connection.cursor()
