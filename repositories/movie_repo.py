@@ -42,7 +42,8 @@ class MovieRepo():
         dbMovie[0]["rooms"] = rooms
         return dbMovie
 
-    def getAllMovies(self):
+    def getAllMovies(self, datetime: str):
+        # TODO Hacer query respecto con un datetime igual al jueves pasado de menor fecha a input datetime
         moviesQuery = "SELECT * FROM movies"
         roomsQuery = "SELECT * FROM rooms"
         timeQuery = "SELECT * FROM times"

@@ -21,11 +21,11 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
 
 @router.get("/")
-async def readMovies():
+async def readMovies(date: str):
     database = DB(DB_PATH, DB_PASSWORD)
     movieRepo = MovieRepo(database)
     controller = MovieController(movieRepo)
-    movies = controller.getAllMovies()
+    movies = controller.getAllMovies(date)
     return {"movies": movies}
 
 
