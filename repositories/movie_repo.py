@@ -42,38 +42,18 @@ class MovieRepo():
         dbMovie[0]["rooms"] = rooms
         return dbMovie
 
+    def getAllMovieTimes(self, datetime: str):
+        timesQuery = "SELECT time, room_name, movie_name, cinema, scrape_date, image_url " \
+                      "FROM times INNER JOIN rooms " \
+                      "ON times.room_id = rooms.room_id INNER JOIN movies ON rooms.movie_id = movies.movie_id " \
+                      "WHERE scrape_date = (SELECT MAX(scrape_date) FROM movies WHERE scrape_date <= %s)"
+        times = self.__db.select(timesQuery, (datetime,))
+        return times
+
     def getAllMovies(self, datetime: str):
-        # TODO Hacer query respecto con un datetime igual al jueves pasado de menor fecha a input datetime
-        moviesQuery = "SELECT * FROM movies"
-        roomsQuery = "SELECT * FROM rooms"
-        timeQuery = "SELECT * FROM times"
-        dbMovies = self.__db.select(
-            moviesQuery
-        )
-        dbRooms = self.__db.select(
-            roomsQuery
-        )
-        dbTimes = self.__db.select(
-            timeQuery
-        )
-        movies = []
-        rooms = []
-        for dbRoom in dbRooms:
-            roomTimes = []
-            for dbTime in dbTimes:
-                if dbTime["room_id"] == dbRoom["room_id"]:
-                    roomTimes.append(dbTime["time"])
-            dbRoom["times"] = roomTimes
-            rooms.append(dbRoom)
-        for movie in dbMovies:
-            movieRooms = []
-            for room in rooms:
-                if room["movie_id"] == movie["movie_id"]:
-                    newRoom = room.copy()
-                    del newRoom["movie_id"]
-                    movieRooms.append(newRoom)
-            movie["rooms"] = movieRooms
-            movies.append(movie)
+        moviesQuery = "SELECT * FROM movies " \
+                      "WHERE scrape_date = (SELECT MAX(scrape_date) FROM movies WHERE scrape_date <= %s)"
+        movies = self.__db.select(moviesQuery, (datetime,))
         return movies
 
     def editMovie(self):

@@ -16,6 +16,11 @@ class MovieController():
         movie = self.__repo.getMovie(movie_id)
         return movie
 
+    def getAllMovieTimes(self, date: str):
+        datetime = DateTime(date)
+        movies = self.__repo.getAllMovieTimes(datetime.dateTime)
+        return movies
+
     def getAllMovies(self, date: str):
         datetime = DateTime(date)
         movies = self.__repo.getAllMovies(datetime.dateTime)

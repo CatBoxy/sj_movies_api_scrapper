@@ -1,7 +1,8 @@
 import os
+from typing import Annotated
 
 from dotenv import load_dotenv
-from fastapi import APIRouter
+from fastapi import APIRouter, Form
 
 from config import Settings
 from controllers.movie_controller import MovieController
@@ -20,13 +21,23 @@ DB_PATH = os.environ.get("DB_PATH")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
 
-@router.get("/")
-async def readMovies(date: str):
+@router.post("/")
+async def readMovies(date: str = Form()):
     database = DB(DB_PATH, DB_PASSWORD)
     movieRepo = MovieRepo(database)
     controller = MovieController(movieRepo)
     movies = controller.getAllMovies(date)
     return {"movies": movies}
+
+
+@router.post("/times")
+async def readMovieTimes(date: str = Form()):
+    database = DB(DB_PATH, DB_PASSWORD)
+    movieRepo = MovieRepo(database)
+    controller = MovieController(movieRepo)
+    movieTimes = controller.getAllMovieTimes(date)
+    return {"movie_times": movieTimes}
+
 
 
 @router.get("/{movie_id}")
