@@ -12,13 +12,18 @@ class MovieController():
         # Manual saving of a movie
         pass
 
-    def getMovie(self, movie_id: str):
-        movie = self.__repo.getMovie(movie_id)
+    def getMovie(self, datetime: str, movie_id: str):
+        # TODO Continue with movie dict, it will remain as a dict
+        rows = self.__repo.getMovie(datetime, movie_id)
+        movie = {
+            "movie_name": rows[0]["movie_name"],
+
+        }
         return movie
 
-    def getAllMovieTimes(self, date: str):
+    def getAllMoviesTimes(self, date: str):
         datetime = DateTime(date)
-        movies = self.__repo.getAllMovieTimes(datetime.dateTime)
+        movies = self.__repo.getAllMoviesTimes(datetime.dateTime)
         return movies
 
     def getAllMovies(self, date: str):

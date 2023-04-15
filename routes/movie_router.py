@@ -31,19 +31,18 @@ async def readMovies(date: str = Form()):
 
 
 @router.post("/times")
-async def readMovieTimes(date: str = Form()):
+async def readMoviesTimes(date: str = Form()):
     database = DB(DB_PATH, DB_PASSWORD)
     movieRepo = MovieRepo(database)
     controller = MovieController(movieRepo)
-    movieTimes = controller.getAllMovieTimes(date)
-    return {"movie_times": movieTimes}
-
+    moviesTimes = controller.getAllMoviesTimes(date)
+    return {"movies_times": moviesTimes}
 
 
 @router.get("/{movie_id}")
-async def readMovieId(movie_id: str):
+async def readMovieId(movie_id: str, date: str = Form()):
     database = DB(DB_PATH, DB_PASSWORD)
     movieRepo = MovieRepo(database)
     controller = MovieController(movieRepo)
-    movie = controller.getMovie(movie_id)
+    movie = controller.getMovie(date, movie_id)
     return {"movie": movie}
